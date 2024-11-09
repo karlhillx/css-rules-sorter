@@ -1,0 +1,29 @@
+{
+  "name": "css-rules-sorter",
+  "version": "1.0.0",
+  "description": "PostCSS-based CSS rules sorter that alphabetically sorts selectors and media queries",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "css",
+    "postcss",
+    "sorter",
+    "css-sorter",
+    "stylesheet"
+  ],
+  "author": "Karl Hill",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/karlhillx/css-rules-sorter.git"
+  },
+  "dependencies": {
+    "postcss": "^8.4.0",
+    "postcss-sort-media-queries": "^5.2.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  }
+}
