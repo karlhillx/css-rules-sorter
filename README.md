@@ -1,9 +1,9 @@
 # CSS Rules Sorter
 
 [![npm version](https://badge.fury.io/js/css-rules-sorter.svg)](https://badge.fury.io/js/css-rules-sorter)
-[![Build Status](https://travis-ci.com/karlhillx/css-rules-sorter.svg?branch=master)](https://travis-ci.com/karlhillx/css-rules-sorter)
-[![Coverage Status](https://coveralls.io/repos/github/karlhillx/css-rules-sorter/badge.svg?branch=master)](https://coveralls.io/github/karlhillx/css-rules-sorter?branch=master)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)    
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![npm downloads](https://img.shields.io/npm/dm/css-rules-sorter.svg)](https://www.npmjs.com/package/css-rules-sorter)
+[![Maintenance](https://img.shields.io/maintenance/yes/2024)](https://github.com/karlhillx/css-rules-sorter)
 
 A powerful PostCSS plugin that automatically sorts CSS rules by alphabetically organizing selectors and media queries, making your stylesheets clean and maintainable.
 
