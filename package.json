@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "PostCSS-based CSS rules sorter that alphabetically sorts selectors and media queries",
   "main": "index.js",
+  "types": "index.d.ts",
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
