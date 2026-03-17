@@ -15,7 +15,7 @@ export default [
       ...pluginJest.configs.recommended.rules,
       'no-console': 'warn',
       'indent': ['error', 2],
-      'quotes': ['error', 'single'],
+      'quotes': ['error', 'single', { 'allowTemplateLiterals': true, 'avoidEscape': true }],
       'semi': ['error', 'always'],
     },
   },
