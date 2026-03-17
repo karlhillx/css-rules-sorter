@@ -1,69 +1,72 @@
-const postcss = require('postcss');
 const sortMediaQueries = require('postcss-sort-media-queries');
 
-function cssRulesSorter(options = {}) {
-    const defaultOptions = {
-        sort: 'mobile-first',
-        selectorSort: 'natural',
-        groupByMediaType: true
-    };
+/**
+ * PostCSS plugin to sort CSS rules
+ * @param {Object} opts
+ * @returns {import('postcss').Plugin}
+ */
+const cssRulesSorterPlugin = (opts = {}) => {
+  const defaultOptions = {
+    sort: 'mobile-first',
+    selectorSort: 'natural',
+    groupByMediaType: true,
+  };
 
-    const config = { ...defaultOptions, ...options };
+  const config = { ...defaultOptions, ...opts };
 
-    const sortSelectors = () => ({
-        postcssPlugin: 'sort-selectors',
-        Once(root) {
-            // First, sort rules within each media query
-            root.walkAtRules('media', atRule => {
-                const rules = atRule.nodes.filter(node => node.type === 'rule');
-                const sorted = rules.sort((a, b) =>
-                    a.selector.toLowerCase().localeCompare(b.selector.toLowerCase())
-                );
+  return {
+    postcssPlugin: 'css-rules-sorter',
+    Once(root) {
+      // 1. Sort rules within media queries
+      root.walkAtRules('media', (atRule) => {
+        const rules = atRule.nodes.filter((node) => node.type === 'rule');
+        if (rules.length === 0) return;
 
-                // Preserve other nodes that aren't rules
-                const otherNodes = atRule.nodes.filter(node => node.type !== 'rule');
+        const sorted = [...rules].sort((a, b) =>
+          a.selector.toLowerCase().localeCompare(b.selector.toLowerCase())
+        );
 
-                atRule.removeAll();
-                sorted.forEach(rule => atRule.append(rule.clone()));
-                otherNodes.forEach(node => atRule.append(node.clone()));
-            });
+        // Replace rules in place
+        rules.forEach((rule, idx) => {
+          rule.replaceWith(sorted[idx].clone());
+        });
+      });
 
-            // Sort top-level rules separately
-            const topRules = root.nodes.filter(node =>
-                node.type === 'rule' && node.parent.type === 'root'
-            );
+      // 2. Sort top-level rules
+      const topRules = root.nodes.filter((node) => node.type === 'rule');
 
-            // Store media queries and other at-rules
-            const atRules = root.nodes.filter(node =>
-                node.type === 'atrule'
-            );
+      if (topRules.length > 0) {
+        const sortedTopRules = [...topRules].sort((a, b) =>
+          a.selector.toLowerCase().localeCompare(b.selector.toLowerCase())
+        );
 
-            // Sort top-level rules
-            const sortedTopRules = topRules.sort((a, b) =>
-                a.selector.toLowerCase().localeCompare(b.selector.toLowerCase())
-            );
+        topRules.forEach((rule, idx) => {
+          rule.replaceWith(sortedTopRules[idx].clone());
+        });
+      }
+    },
+    async OnceExit(root, { postcss }) {
+      await postcss([sortMediaQueries(config)]).process(root, { from: undefined });
+    },
+  };
+};
 
-            // Rebuild the root with correct order
-            root.removeAll();
+cssRulesSorterPlugin.postcss = true;
 
-            // Add sorted top-level rules
-            sortedTopRules.forEach(rule => root.append(rule.clone()));
+/**
+ * Main export as a function that can also be used as a standalone processor
+ */
+function main(opts = {}) {
+  const plugin = cssRulesSorterPlugin(opts);
 
-            // Add media queries and other at-rules back in their original order
-            atRules.forEach(rule => root.append(rule.clone()));
-        }
-    });
+  // Attach process method for standalone usage (backward compatibility)
+  plugin.process = async (css) => {
+    const postcss = require('postcss');
+    const result = await postcss([plugin]).process(css, { from: undefined });
+    return result.css;
+  };
 
-    return {
-        process: async (css) => {
-            const result = await postcss([
-                sortSelectors(),
-                sortMediaQueries(config)
-            ]).process(css, { from: undefined });
-
-            return result.css;
-        }
-    };
+  return plugin;
 }
 
-module.exports = cssRulesSorter;
+module.exports = main;

@@ -1,0 +1,7 @@
+tests/
+.github/
+.eslintrc.json
+.prettierrc
+.editorconfig
+Makefile
+jest.config.js
