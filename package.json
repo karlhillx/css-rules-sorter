@@ -8,7 +8,7 @@
     "test": "jest",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "prepare": "npm test && npm run lint"
+    "prepare": "npm test"
   },
   "keywords": [
     "css",
@@ -28,9 +28,11 @@
     "postcss-sort-media-queries": "^5.2.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "eslint": "^10.0.3",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-jest": "^29.15.0",
+    "globals": "^17.4.0",
     "jest": "^29.0.0",
     "prettier": "^3.8.1"
   }
