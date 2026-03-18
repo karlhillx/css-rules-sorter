@@ -1,18 +1,18 @@
 # CSS Rules Sorter
 
-[![CI](https://github.com/karlhillx/css-rules-sorter/actions/workflows/ci.yml/badge.svg)](https://github.com/karlhillx/css-rules-sorter/actions/workflows/ci.yml)
-[![npm version](https://badge.fury.io/js/css-rules-sorter.svg)](https://badge.fury.io/js/css-rules-sorter)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
-[![npm downloads](https://img.shields.io/npm/dm/css-rules-sorter.svg)](https://www.npmjs.com/package/css-rules-sorter)
+[![npm version](https://img.shields.io/npm/v/css-rules-sorter.svg)](https://www.npmjs.com/package/css-rules-sorter)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PostCSS](https://img.shields.io/badge/postcss-8+-DD3A0A.svg?logo=postcss&logoColor=white)](https://postcss.org/)
+[![Jest](https://img.shields.io/badge/tested_with-jest-99424f.svg?logo=jest&logoColor=white)](https://jestjs.io/)
 
 A PostCSS plugin that automatically sorts CSS rules alphabetically by selectors and organizes media queries for cleaner, more maintainable stylesheets.
 
 ## Features
 
-- ✨ **Alphabetical Sorting**: Automatically sorts top-level selectors and rules within media queries.
-- 📱 **Media Query Management**: Flexible ordering (mobile-first or desktop-first) and grouping using `postcss-sort-media-queries`.
+- ✨ **Alphabetical Sorting**: Automatically sorts top-level selectors and rules within media queries alphabetically.
+- 📱 **Media Query Management**: Organizes and groups media queries using `postcss-sort-media-queries`.
 - 🚀 **PostCSS 8+**: Fully compatible with the latest PostCSS API.
-- 🛠️ **Developer Friendly**: Includes TypeScript types (planned), tests, and linting.
+- 🛠️ **Developer Friendly**: Includes TypeScript types, comprehensive Jest tests, and linting.
 
 ## Installation
 
@@ -71,16 +71,16 @@ sorter.process(css).then((result) => {
 
 ```bash
 # Install dependencies
-make install
+npm install
 
 # Run tests
-make test
+npm test
 
 # Lint code
-make lint
+npm run lint
 
 # Format code
-make format
+npm run format
 ```
 
 ## Contributing
