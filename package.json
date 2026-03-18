@@ -1,9 +1,15 @@
 {
   "name": "css-rules-sorter",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "PostCSS-based CSS rules sorter that alphabetically sorts selectors and media queries",
   "main": "index.js",
   "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "README.md",
+    "LICENSE",
+    "test/"
+  ],
   "scripts": {
     "test": "jest",
     "lint": "eslint .",
@@ -25,7 +31,7 @@
   },
   "dependencies": {
     "postcss": "^8.4.0",
-    "postcss-sort-media-queries": "^5.2.0"
+    "postcss-sort-media-queries": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
