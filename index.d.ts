@@ -1,4 +1,4 @@
-import { PluginCreator, Plugin } from 'postcss';
+import { Plugin } from 'postcss';
 
 declare namespace cssRulesSorter {
   interface Options {
@@ -12,7 +12,25 @@ declare namespace cssRulesSorter {
      * Method for sorting selectors
      * @default 'natural'
      */
-    selectorSort?: 'natural' | ((a: string, b: string) => number);
+    selectorSort?: 'natural' | 'specificity' | 'bem' | ((a: any, b: any) => number);
+
+    /**
+     * Method for sorting properties within rules
+     * @default 'none'
+     */
+    propertySort?: 'none' | 'alphabetical';
+
+    /**
+     * Manage shorthand properties by expanding or collapsing them
+     * @default 'none'
+     */
+    propertyShorthand?: 'none' | 'expand' | 'collapse';
+
+    /**
+     * Sort CSS cascade layers based on the first @layer definition
+     * @default true
+     */
+    sortLayers?: boolean;
     
     /**
      * Whether to group media queries by type
