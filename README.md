@@ -61,11 +61,120 @@ sorter.process(css).then((result) => {
 
 ## Configuration Options
 
-| Option             | Type      | Default          | Description                                               |
-| ------------------ | --------- | ---------------- | --------------------------------------------------------- |
-| `sort`             | `string`  | `'mobile-first'` | Media query order: `'mobile-first'` or `'desktop-first'`. |
-| `selectorSort`     | `string`  | `'natural'`      | Method for sorting selectors.                             |
-| `groupByMediaType` | `boolean` | `true`           | Whether to group media queries by type.                   |
+| Option             | Type      | Default          | Description                                                                    |
+| ------------------ | --------- | ---------------- | ------------------------------------------------------------------------------ |
+| `sort`             | `string`  | `'mobile-first'` | Sets the media query order: `'mobile-first'` or `'desktop-first'`.             |
+| `selectorSort`     | `string`  | `'natural'`      | Defines the method for sorting selectors. Can be `'natural'`, `'specificity'`, or `'bem'`. |
+| `propertySort`     | `string`  | `'none'`         | Sorts properties within each rule. Can be `'none'` or `'alphabetical'`.          |
+| `propertyShorthand`| `string`  | `'none'`         | Manages shorthand properties. Can be `'none'`, `'expand'`, or `'collapse'`.      |
+| `sortLayers`       | `boolean` | `true`           | Sorts CSS cascade layers based on the first `@layer` definition.                 |
+| `groupByMediaType` | `boolean` | `true`           | Groups media queries by their type (e.g., `screen`, `print`).                  |
+
+## Advanced Features
+
+### BEM Selector Sorting
+
+Set `selectorSort: 'bem'` to sort selectors based on the Block, Element, Modifier (BEM) methodology. The sorting order is:
+1. Base block (`.card`)
+2. Block modifiers (`.card--featured`)
+3. Block elements (`.card__header`)
+4. Element modifiers (`.card__header--small`)
+
+**Before:**
+```css
+.card__header--small { font-size: 0.8em; }
+.card--featured { border: 1px solid blue; }
+.card { color: black; }
+.card__header { font-weight: bold; }
+```
+
+**After:**
+```css
+.card { color: black; }
+.card--featured { border: 1px solid blue; }
+.card__header { font-weight: bold; }
+.card__header--small { font-size: 0.8em; }
+```
+
+### Shorthand Property Management
+
+The `propertyShorthand` option allows you to expand or collapse shorthand CSS properties.
+
+#### Expand Shorthand Properties
+
+Set `propertyShorthand: 'expand'` to break down shorthand properties into their longhand equivalents.
+
+**Before:**
+```css
+.box {
+  border: 1px solid black;
+  margin: 10px 20px;
+}
+```
+
+**After:**
+```css
+.box {
+  border-width: 1px;
+  border-style: solid;
+  border-color: black;
+  margin-top: 10px;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+```
+*Note: The current implementation of `expand` only supports `margin` and `padding`.*
+
+#### Collapse Shorthand Properties
+
+*This feature is not yet implemented.*
+
+### Cascade Layer Sorting
+
+Set `sortLayers: true` (the default) to automatically sort `@layer` blocks based on the order defined in the first `@layer` rule.
+
+**Before:**
+```css
+@layer components, base, reset;
+
+@layer base {
+  body { font-family: sans-serif; }
+}
+
+@layer reset {
+  * { margin: 0; padding: 0; }
+}
+
+@layer components {
+  .button { padding: 1em; }
+}
+```
+
+**After:**
+```css
+@layer reset {
+  * { margin: 0; padding: 0; }
+}
+
+@layer base {
+  body { font-family: sans-serif; }
+}
+
+@layer components {
+  .button { padding: 1em; }
+}
+```
+
+## New Capabilities
+
+### Property Sorting
+
+Set `propertySort: 'alphabetical'` to sort CSS properties within each rule alphabetically. This helps maintain a consistent and predictable order for declarations.
+
+### Specificity-Based Selector Sorting
+
+Set `selectorSort: 'specificity'` to sort selectors from low to high specificity. This can help prevent specificity conflicts and make your CSS more predictable.
 
 ## Development
 
