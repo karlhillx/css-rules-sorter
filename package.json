@@ -27,7 +27,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/karlhillx/css-rules-sorter.git"
+    "url": "git+https://github.com/karlhillx/css-rules-sorter.git"
   },
   "dependencies": {
     "postcss": "^8.4.0",
