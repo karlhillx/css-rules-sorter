@@ -1,4 +1,5 @@
 const sortMediaQueries = require('postcss-sort-media-queries');
+console.log('Plugin loaded');
 
 /**
  * PostCSS plugin to sort CSS rules
