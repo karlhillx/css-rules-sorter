@@ -1,5 +1,8 @@
 import type { Plugin, Root, Rule, Declaration, AtRule, Postcss } from 'postcss';
-import sortMediaQueries = require('postcss-sort-media-queries');
+
+/* eslint-disable @typescript-eslint/no-require-imports */
+const sortMediaQueries = require('postcss-sort-media-queries');
+/* eslint-enable @typescript-eslint/no-require-imports */
 
 interface Options {
   sort?: 'mobile-first' | 'desktop-first';
@@ -176,8 +179,7 @@ const cssRulesSorterPlugin = (opts: Options = {}): Plugin => {
   };
 };
 
-// @ts-ignore
-cssRulesSorterPlugin.postcss = true;
+(cssRulesSorterPlugin as any).postcss = true;
 
 function main(opts: Options = {}): StandalonePlugin {
   const plugin = cssRulesSorterPlugin(opts) as StandalonePlugin;

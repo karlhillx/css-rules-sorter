@@ -1,4 +1,6 @@
-import cssRulesSorter = require('../src/index');
+/* eslint-disable @typescript-eslint/no-require-imports */
+const cssRulesSorter = require('../src/index');
+/* eslint-enable @typescript-eslint/no-require-imports */
 import postcss from 'postcss';
 
 async function run(input: string, opts: any = {}) {
