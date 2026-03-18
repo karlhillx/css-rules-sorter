@@ -2,11 +2,11 @@
 
 ✨ A PostCSS plugin to automatically sort CSS selectors and media queries for cleaner, more maintainable stylesheets.
 
-[![npm version](https://badge.fury.io/js/css-rules-sorter.svg)](https://badge.fury.io/js/css-rules-sorter)
+[![npm version](https://badge.fury.io/js/@karlhillx/css-rules-sorter.svg)](https://badge.fury.io/js/@karlhillx/css-rules-sorter)
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PostCSS 8+](https://img.shields.io/badge/PostCSS-8%2B-787CB5)](https://github.com/postcss/postcss)
-[![GitHub Actions CI](https://github.com/karlhillx/css-rules-sorter/actions/workflows/ci.yml/badge.svg)](https://github.com/karlhillx/css-rules-sorter/actions/workflows/ci.yml)
-[![Jest Tests](https://img.shields.io/badge/Tests-Jest-8854d6)](https://github.com/karlhillx/css-rules-sorter/tree/main/test)
+[![GitHub Actions CI](https://github.com/karlhillx/@karlhillx/css-rules-sorter/actions/workflows/ci.yml/badge.svg)](https://github.com/karlhillx/@karlhillx/css-rules-sorter/actions/workflows/ci.yml)
+[![Jest Tests](https://img.shields.io/badge/Tests-Jest-8854d6)](https://github.com/karlhillx/@karlhillx/css-rules-sorter/tree/main/test)
 
 ## Key Features
 
@@ -20,18 +20,18 @@
 ## Installation
 
 ```bash
-npm install css-rules-sorter postcss --save-dev
+npm install @karlhillx/css-rules-sorter postcss --save-dev
 ```
 
 ## Usage
 
-Add `css-rules-sorter` to your PostCSS configuration (e.g., `postcss.config.js`):
+Add `@karlhillx/css-rules-sorter` to your PostCSS configuration (e.g., `postcss.config.js`):
 
 ```javascript
 // postcss.config.js
 module.exports = {
   plugins: [
-    require('css-rules-sorter')({
+    require('@karlhillx/css-rules-sorter')({
       sort: 'mobile-first', // or 'desktop-first'
       selectorSort: 'natural', // or 'bem' or 'specificity'
       propertyShorthand: 'expand', // or 'collapse'

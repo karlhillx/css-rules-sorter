@@ -1,5 +1,5 @@
 {
-  "name": "css-rules-sorter",
+  "name": "@karlhillx/css-rules-sorter",
   "version": "1.1.0",
   "description": "PostCSS-based CSS rules sorter that alphabetically sorts selectors and media queries",
   "main": "index.js",
