@@ -1,5 +1,4 @@
 const sortMediaQueries = require('postcss-sort-media-queries');
-console.log('Plugin loaded');
 
 /**
  * PostCSS plugin to sort CSS rules
@@ -87,8 +86,41 @@ const cssRulesSorterPlugin = (opts = {}) => {
         decl.cloneBefore({ prop: `${prop}-left`, value: left });
         decl.remove();
       });
+    } else if (config.propertyShorthand === 'collapse') {
+      ['margin', 'padding'].forEach((baseProp) => {
+        const sides = ['top', 'right', 'bottom', 'left'];
+        const values = {};
+        let foundAll = true;
+
+        sides.forEach((side) => {
+          const decl = rule.nodes.find((n) => n.type === 'decl' && n.prop === `${baseProp}-${side}`);
+          if (decl) {
+            values[side] = decl.value;
+          } else {
+            foundAll = false;
+          }
+        });
+
+        if (foundAll) {
+          let finalValue;
+          if (values.top === values.right && values.top === values.bottom && values.top === values.left) {
+            finalValue = values.top;
+          } else if (values.top === values.bottom && values.right === values.left) {
+            finalValue = `${values.top} ${values.right}`;
+          } else if (values.right === values.left) {
+            finalValue = `${values.top} ${values.right} ${values.bottom}`;
+          } else {
+            finalValue = `${values.top} ${values.right} ${values.bottom} ${values.left}`;
+          }
+
+          rule.append({ prop: baseProp, value: finalValue });
+          sides.forEach((side) => {
+            const decl = rule.nodes.find((n) => n.type === 'decl' && n.prop === `${baseProp}-${side}`);
+            if (decl) decl.remove();
+          });
+        }
+      });
     }
-    // TODO: Implement 'collapse'
   };
 
   const sortProperties = (rule) => {
