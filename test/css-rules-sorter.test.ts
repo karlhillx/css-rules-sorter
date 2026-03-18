@@ -1,7 +1,7 @@
-const cssRulesSorter = require('../index');
-const postcss = require('postcss');
+import cssRulesSorter = require('../src/index');
+import postcss from 'postcss';
 
-async function run(input, opts = {}) {
+async function run(input: string, opts: any = {}) {
   const result = await postcss([cssRulesSorter(opts)]).process(input, { from: undefined });
   return result.css;
 }

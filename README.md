@@ -1,21 +1,23 @@
-# CSS Rules Sorter
+# @karlhillx/css-rules-sorter
 
-✨ A PostCSS plugin to automatically sort CSS selectors and media queries for cleaner, more maintainable stylesheets.
+✨ **The Professional CSS Management Engine for PostCSS.**
 
-[![npm version](https://badge.fury.io/js/@karlhillx/css-rules-sorter.svg)](https://badge.fury.io/js/@karlhillx/css-rules-sorter)
+`@karlhillx/css-rules-sorter` is a high-performance PostCSS plugin designed to bring rigorous architectural discipline to your stylesheets. Moving beyond simple alphabetical sorting, it provides a comprehensive suite of tools for managing selectors, properties, media queries, and cascade layers with surgical precision.
+
+[![npm version](https://badge.fury.io/js/%40karlhillx%2Fcss-rules-sorter.svg)](https://badge.fury.io/js/@karlhillx/css-rules-sorter)
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PostCSS 8+](https://img.shields.io/badge/PostCSS-8%2B-787CB5)](https://github.com/postcss/postcss)
-[![GitHub Actions CI](https://github.com/karlhillx/@karlhillx/css-rules-sorter/actions/workflows/ci.yml/badge.svg)](https://github.com/karlhillx/@karlhillx/css-rules-sorter/actions/workflows/ci.yml)
-[![Jest Tests](https://img.shields.io/badge/Tests-Jest-8854d6)](https://github.com/karlhillx/@karlhillx/css-rules-sorter/tree/main/test)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0%2B-blue)](https://www.typescriptlang.org/)
+[![GitHub Actions CI](https://github.com/karlhillx/css-rules-sorter/actions/workflows/ci.yml/badge.svg)](https://github.com/karlhillx/css-rules-sorter/actions/workflows/ci.yml)
 
-## Key Features
+## Why Choose This Sorter?
 
-- **Alphabetical Selector Sorting**: Automatically sorts top-level selectors and rules within media queries for consistent code.
-- **Intelligent Media Query Management**: Flexible ordering (mobile-first or desktop-first) and grouping using `postcss-sort-media-queries`.
-- **Advanced Methodologies**: Built-in support for BEM-aware sorting.
-- **Cascade Layer Support**: Automatically reorders `@layer` blocks to match your defined priority.
-- **Modern PostCSS Support**: Fully compatible with the latest PostCSS 8+ API.
-- **Developer-Focused**: Includes TypeScript definitions, comprehensive tests, and linting.
+- **Architectural Awareness**: Built-in support for **BEM (Block Element Modifier)** methodology, ensuring your component structures remain logically grouped and readable.
+- **Shorthand Intelligence**: Sophisticated property management that can **expand** shorthands into longhands for granular control or **collapse** them for cleaner production code.
+- **Cascade Layer Sovereignty**: Automatically reorders `@layer` blocks to strictly adhere to your defined architectural priority, preventing specificity leaks.
+- **Media Query Orchestration**: Flexible mobile-first or desktop-first ordering with intelligent grouping via `postcss-sort-media-queries`.
+- **Native TypeScript**: Completely rewritten in TypeScript with first-class type definitions for a robust developer experience.
+- **Modern Build Pipeline**: Optimized CJS and ESM outputs for maximum compatibility across modern toolchains.
 
 ## Installation
 
@@ -25,16 +27,17 @@ npm install @karlhillx/css-rules-sorter postcss --save-dev
 
 ## Usage
 
-Add `@karlhillx/css-rules-sorter` to your PostCSS configuration (e.g., `postcss.config.js`):
+Add `@karlhillx/css-rules-sorter` to your PostCSS configuration:
 
 ```javascript
 // postcss.config.js
 module.exports = {
   plugins: [
     require('@karlhillx/css-rules-sorter')({
-      sort: 'mobile-first', // or 'desktop-first'
-      selectorSort: 'natural', // or 'bem' or 'specificity'
-      propertyShorthand: 'expand', // or 'collapse'
+      sort: 'mobile-first',        // 'mobile-first' | 'desktop-first'
+      selectorSort: 'bem',         // 'natural' | 'specificity' | 'bem'
+      propertyShorthand: 'expand', // 'none' | 'expand' | 'collapse'
+      sortLayers: true,            // Reorder @layer blocks
     }),
   ],
 };
@@ -42,20 +45,20 @@ module.exports = {
 
 ## Configuration Options
 
-| Option             | Type      | Default          | Description                                                                    |
-| ------------------ | --------- | ---------------- | ------------------------------------------------------------------------------ |
-| `sort`             | `string`  | `'mobile-first'` | Sets the media query order: `'mobile-first'` or `'desktop-first'`.             |
-| `selectorSort`     | `string`  | `'natural'`      | Defines the method for sorting selectors: `'natural'`, `'specificity'`, or `'bem'`. |
-| `propertySort`     | `string`  | `'none'`         | Sorts properties within each rule: `'none'` or `'alphabetical'`.               |
-| `propertyShorthand`| `string`  | `'none'`         | Manages shorthand properties: `'none'`, `'expand'`, or `'collapse'`.           |
-| `sortLayers`       | `boolean` | `true`           | Sorts CSS cascade layers based on the first `@layer` definition.                 |
-| `groupByMediaType` | `boolean` | `true`           | Groups media queries by their type (e.g., `screen`, `print`).                  |
+| Option              | Type      | Default          | Description                                                                     |
+| ------------------- | --------- | ---------------- | ------------------------------------------------------------------------------- |
+| `sort`              | `string`  | `'mobile-first'` | Sets the media query order: `'mobile-first'` or `'desktop-first'`.              |
+| `selectorSort`      | `string`  | `'natural'`      | Method for sorting selectors: `'natural'`, `'specificity'`, or `'bem'`.          |
+| `propertySort`      | `string`  | `'none'`         | Sorts properties within each rule: `'none'` or `'alphabetical'`.                |
+| `propertyShorthand` | `string`  | `'none'`         | Manages shorthands: `'none'`, `'expand'` (split), or `'collapse'` (combine).    |
+| `sortLayers`        | `boolean` | `true`           | Sorts CSS cascade layers based on the priority in the first `@layer` definition. |
+| `groupByMediaType`  | `boolean` | `true`           | Groups media queries by their type (e.g., `screen`, `print`).                   |
 
 ## Advanced Features
 
 ### BEM Selector Sorting
 
-Set `selectorSort: 'bem'` to sort selectors based on the Block, Element, Modifier (BEM) methodology. This ensures your component structures stay logically grouped.
+Setting `selectorSort: 'bem'` ensures your CSS follows the logical structure of your components. It intelligently groups base blocks, followed by their modifiers, then elements, and finally element modifiers.
 
 **Before:**
 ```css
@@ -73,56 +76,27 @@ Set `selectorSort: 'bem'` to sort selectors based on the Block, Element, Modifie
 .card__header--small { font-size: 0.8em; }
 ```
 
-### Shorthand Property Management
+### Shorthand & Longhand Management
 
-Use `propertyShorthand` to enforce a specific style for `margin` and `padding`.
-
-- **`'expand'`**: Breaks down shorthands like `margin: 10px 20px;` into four longhand properties. Excellent for preventing accidental overrides.
-- **`'collapse'`**: Combines longhand properties into a single shorthand when all four sides are present.
+- **`'expand'`**: Transforms `margin: 10px 20px;` into `margin-top`, `margin-right`, etc. Highly recommended during development to prevent accidental property overrides.
+- **`'collapse'`**: Intelligently combines related longhand properties back into a single shorthand when all sides are defined.
 
 ### Cascade Layer Sorting
 
-Set `sortLayers: true` to automatically reorder your `@layer` blocks to match the priority defined in your first `@layer` rule.
+With `sortLayers: true`, the plugin finds your layer priority definition (e.g., `@layer reset, base, components;`) and reorders all subsequent `@layer` blocks to match that exact sequence.
 
-**Before:**
-```css
-@layer components, base, reset;
+## Development & Contributing
 
-@layer base { body { color: red; } }
-@layer reset { * { margin: 0; } }
-@layer components { .btn { padding: 1em; } }
-```
-
-**After:**
-```css
-@layer reset { * { margin: 0; } }
-@layer base { body { color: red; } }
-@layer components { .btn { padding: 1em; } }
-```
-
-## Development
+The project uses a modern TypeScript-based workflow:
 
 ```bash
-# Install all dependencies
-npm install
-
-# Run tests
-npm test
-
-# Lint code
-npm run lint
-
-# Format code
-npm run format
+npm install    # Install dependencies
+npm run build  # Generate dist/ (CJS, ESM, and .d.ts)
+npm test       # Run the Jest test suite with coverage
+npm run lint   # Run ESLint for code quality
 ```
 
-## Contributing
-
-1.  Fork the repository.
-2.  Create a new feature branch (`git checkout -b feature/your-feature`).
-3.  Commit your changes (`git commit -m 'Add your feature'`).
-4.  Push to the branch (`git push origin feature/your-feature`).
-5.  Create a Pull Request.
+Contributions welcome! Fork, branch, commit, and open a Pull Request.
 
 ## License
 
